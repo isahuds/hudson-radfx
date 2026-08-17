@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Isaac Hudson</title>
+<meta name="description" content="Isaac Hudson — radiation effects research at the Center for Reliable and Trusted Electronics, Indiana University Bloomington." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --crimson:#990000; --crimson-deep:#6f0000;
+    --ink:#1c1a17; --body:#3a362f; --muted:#6f695f; --faint:#9c958a;
+    --line:#e8e3d9; --line-soft:#f0ece3;
+    --paper:#ffffff; --alt:#faf8f3; --panel:#ffffff;
+    --serif:'Newsreader',Georgia,'Times New Roman',serif;
+    --sans:'Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    --wrap:1080px; --read:64ch;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--body);font-family:var(--sans);
+       font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  a{color:var(--crimson);text-underline-offset:2px}
+  img{max-width:100%;height:auto;display:block}
+  .wrap{max-width:var(--wrap);margin:0 auto;padding:0 28px}
+
+  /* ---- sticky header ---- */
+  header.bar{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.9);
+    backdrop-filter:saturate(140%) blur(8px);border-bottom:1px solid var(--line)}
+  .bar .wrap{display:flex;align-items:center;justify-content:space-between;height:58px}
+  .bar .brand{display:flex;align-items:center;gap:11px;font-family:var(--sans);
+    font-weight:600;font-size:14px;color:var(--ink);letter-spacing:-.01em;text-decoration:none}
+  .bar .brand .dot{width:9px;height:9px;border-radius:50%;background:var(--crimson);flex:none}
+  .bar nav{display:flex;align-items:center;gap:22px}
+  .bar nav a{font-size:13.5px;color:var(--muted);text-decoration:none;font-weight:500}
+  .bar nav a:hover{color:var(--ink)}
+  .btn{display:inline-flex;align-items:center;gap:7px;font-family:var(--sans);font-weight:600;
+    font-size:13.5px;text-decoration:none;padding:8px 15px;border-radius:8px;
+    background:var(--crimson);color:#fff;border:1px solid var(--crimson);transition:background .15s}
+  .btn:hover{background:var(--crimson-deep)}
+  .btn.ghost{background:transparent;color:var(--crimson);border-color:var(--line)}
+  .btn.ghost:hover{background:var(--alt);color:var(--crimson-deep)}
+  @media(max-width:720px){.bar nav a.sec{display:none}}
+
+  /* ---- hero ---- */
+  .hero{padding:64px 0 56px;border-bottom:1px solid var(--line)}
+  .hero .wrap{display:grid;grid-template-columns:1fr auto;gap:48px;align-items:center}
+  @media(max-width:720px){.hero .wrap{grid-template-columns:1fr;text-align:left}}
+  .eyebrow{font-family:var(--sans);font-weight:600;font-size:12.5px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--crimson);margin:0 0 18px}
+  h1.title{font-family:var(--serif);font-weight:500;font-size:clamp(32px,5vw,52px);
+    line-height:1.08;letter-spacing:-.01em;color:var(--ink);margin:0 0 14px;max-width:14ch}
+  .role{font-family:var(--sans);font-size:15.5px;color:var(--muted);margin:0 0 24px;line-height:1.6}
+  .role b{color:var(--ink);font-weight:600}
+  .lede{font-family:var(--serif);font-size:19px;line-height:1.6;color:var(--body);
+    max-width:56ch;margin:0 0 28px}
+  .hero-actions{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+  .hero-actions .btn{font-size:14.5px;padding:11px 20px}
+  .headshot{width:200px;height:200px;border-radius:50%;object-fit:cover;
+    border:1px solid var(--line);box-shadow:0 2px 18px rgba(28,26,23,.08)}
+  @media(max-width:720px){.headshot{width:140px;height:140px}}
+
+  /* ---- sections ---- */
+  section.sec{padding:64px 0;border-bottom:1px solid var(--line)}
+  section.sec:nth-of-type(even){background:var(--alt)}
+  .sec-head{margin:0 0 26px}
+  .sec-num{font-family:var(--sans);font-weight:600;font-size:12.5px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--crimson);margin:0 0 8px}
+  h2.sec-title{font-family:var(--serif);font-weight:500;font-size:clamp(24px,3.4vw,34px);
+    line-height:1.12;color:var(--ink);margin:0;letter-spacing:-.01em}
+  .prose{max-width:var(--read);font-size:17px;color:var(--body)}
+  .prose p{margin:0 0 14px}
+  ul.points{list-style:none;margin:0;padding:0;max-width:70ch}
+  ul.points li{position:relative;padding:0 0 0 22px;margin:0 0 13px;font-size:16.5px;line-height:1.6}
+  ul.points li::before{content:"";position:absolute;left:0;top:11px;width:7px;height:7px;
+    border-radius:50%;background:var(--crimson);opacity:.85}
+  ul.points li b{color:var(--ink);font-weight:600}
+
+  /* project cards */
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:8px}
+  @media(max-width:720px){.cards{grid-template-columns:1fr}}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;
+    padding:26px 26px 24px;display:flex;flex-direction:column}
+  section.sec:nth-of-type(even) .card{background:#fff}
+  .card .tag{font-family:var(--sans);font-weight:600;font-size:11.5px;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--crimson);margin:0 0 10px}
+  .card h3{font-family:var(--serif);font-weight:500;font-size:22px;color:var(--ink);
+    margin:0 0 10px;line-height:1.25}
+  .card p{font-size:15px;color:var(--body);line-height:1.6;margin:0 0 18px;flex:1}
+  .card .btn{align-self:flex-start}
+
+  /* setup gallery */
+  .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:8px}
+  @media(max-width:820px){.gallery{grid-template-columns:1fr 1fr}}
+  @media(max-width:560px){.gallery{grid-template-columns:1fr}}
+  figure.fig{margin:0;background:var(--panel);border:1px solid var(--line);
+    border-radius:12px;padding:14px}
+  section.sec:nth-of-type(even) figure.fig{background:#fff}
+  figure.fig img{border-radius:5px;aspect-ratio:4/3;object-fit:cover;width:100%}
+  figure.fig figcaption{font-family:var(--sans);font-size:12.5px;color:var(--muted);
+    line-height:1.5;margin-top:11px;padding-top:10px;border-top:1px solid var(--line-soft)}
+
+  /* footer */
+  footer{padding:56px 0 64px;background:var(--ink);color:#d9d4c9}
+  footer .wrap{display:grid;grid-template-columns:1.4fr 1fr;gap:40px;align-items:start}
+  footer h3{font-family:var(--serif);font-weight:500;font-size:22px;color:#fff;margin:0 0 12px}
+  footer p{font-size:14.5px;line-height:1.65;color:#b8b2a6;margin:0 0 8px;max-width:46ch}
+  footer a{color:#f0c9c0}
+  footer .links{display:flex;flex-wrap:wrap;gap:16px;margin-top:14px}
+  footer .links a{font-size:13.5px;font-weight:500}
+  footer .logos{display:flex;align-items:center;flex-wrap:wrap;gap:18px;margin-top:6px}
+  footer .logos img{height:52px;width:auto;opacity:.95;background:#fff;border-radius:8px;padding:7px}
+  footer .logos img.logo-white{background:transparent;padding:0;height:38px}
+  footer .cite{font-family:var(--sans);font-size:12.5px;color:#8f887c;margin-top:26px;
+    padding-top:18px;border-top:1px solid #34302a;line-height:1.6}
+  @media(max-width:720px){footer .wrap{grid-template-columns:1fr;gap:28px}}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="#top"><span class="dot"></span><span>Isaac Hudson</span></a>
+    <nav>
+      <a class="sec" href="#about">About</a>
+      <a class="sec" href="#research">Research</a>
+      <a class="sec" href="#setups">Test setups</a>
+      <a class="btn" href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero" id="top">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">Radiation Effects Research</p>
+      <h1 class="title">Isaac Hudson</h1>
+      <p class="role"><b>Center for Reliable and Trusted Electronics (CREATE)</b><br />Indiana University Bloomington</p>
+      <p class="lede">I study how radiation degrades and disrupts electronics, from total-ionizing-dose failure in commercial microcontrollers to test methodology for single-event effects campaigns.</p>
+      <div class="hero-actions">
+        <a class="btn" href="mailto:isahudso@iu.edu">Email me</a>
+        <a class="btn ghost" href="https://github.com/isahuds" target="_blank" rel="noopener">GitHub ↗</a>
+        <a class="btn ghost" href="#research">See my research ↓</a>
+      </div>
+    </div>
+    <img class="headshot" src="images/headshot.png" alt="Isaac Hudson" />
+  </div>
+</div>
+
+<main>
+
+  <section class="sec" id="about">
+    <div class="wrap">
+      <div class="sec-head"><p class="sec-num">About</p><h2 class="sec-title">What I work on</h2></div>
+      <div class="prose">
+        <p>My work sits at the intersection of radiation effects testing and test methodology for commercial-off-the-shelf (COTS) electronics. I look for ways to get more reliable, more individualized failure predictions out of a test campaign without adding hardware or running past the point the data stops paying for itself.</p>
+        <p>Two threads run through this. The first is total ionizing dose (TID): screening complex devices beyond a single worst-case number, using programming choices and a device's own internal oscillators to individualize dose-to-failure estimates through life. The second is test design itself: modeling how single-event effects (SEE) test campaigns should be run, so beam time and flux are chosen to maximize verified data rather than lost to interrupt recovery.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="research">
+    <div class="wrap">
+      <div class="sec-head"><p class="sec-num">Research</p><h2 class="sec-title">Papers and tools</h2></div>
+      <div class="cards">
+        <div class="card">
+          <p class="tag">IEEE NSREC 2026</p>
+          <h3>TID-Induced Failure in a Complex Microcontroller</h3>
+          <p>Inter-device variability in TID-induced failure across ninety-seven MSP430FR6989 microcontrollers, with beyond-worst-case screening and in-situ health monitoring using the device's own oscillators.</p>
+          <a class="btn ghost" href="https://isahuds.github.io/NSREC-26-Hudson/" target="_blank" rel="noopener">Visit companion site ↗</a>
+        </div>
+        <div class="card">
+          <p class="tag">RADECS 2026</p>
+          <h3>Dynamic SEE Test Design Optimizer</h3>
+          <p>A calculator for planning dynamic single-event effect test campaigns: enter measurable parameters and it returns the flux and batch size that maximize verified data per hour of beam time.</p>
+          <a class="btn ghost" href="https://isahuds.github.io/Dynamic-Optimization/" target="_blank" rel="noopener">Open the tool ↗</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="setups">
+    <div class="wrap">
+      <div class="sec-head"><p class="sec-num">In the field</p><h2 class="sec-title">Test setups</h2></div>
+      <div class="gallery">
+        <figure class="fig">
+          <img src="images/setup-1.jpg" alt="Irradiation and readout test setup" />
+          <figcaption>Co-60 irradiation chamber with biased DUT boards and the oscilloscope capture path.</figcaption>
+        </figure>
+        <!-- Add more setup photos here, e.g.:
+        <figure class="fig">
+          <img src="images/setup-2.jpg" alt="Describe the setup" />
+          <figcaption>Caption for the second setup photo.</figcaption>
+        </figure>
+        <figure class="fig">
+          <img src="images/setup-3.jpg" alt="Describe the setup" />
+          <figcaption>Caption for the third setup photo.</figcaption>
+        </figure>
+        -->
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer id="contact">
+  <div class="wrap">
+    <div>
+      <h3>Get in touch</h3>
+      <p>Isaac Hudson · RES Lab, Center for Reliable and Trusted Electronics<br />Indiana University Bloomington<br /><a href="mailto:isahudso@iu.edu">isahudso@iu.edu</a></p>
+      <p>Questions about the research, the tools, or collaboration are welcome.</p>
+      <div class="links">
+        <a href="https://github.com/isahuds" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://isahuds.github.io/NSREC-26-Hudson/" target="_blank" rel="noopener">NSREC 2026</a>
+        <a href="https://isahuds.github.io/Dynamic-Optimization/" target="_blank" rel="noopener">RADECS 2026 tool</a>
+      </div>
+    </div>
+    <div>
+      <div class="logos">
+        <img src="images/logo-iu.jpeg" alt="Indiana University" />
+        <img class="logo-white" src="images/logo-create-dark.png" alt="CREATE, Indiana University" />
+      </div>
+    </div>
+    <div class="cite" style="grid-column:1/-1">
+      Center for Reliable and Trusted Electronics, Indiana University Bloomington.
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
